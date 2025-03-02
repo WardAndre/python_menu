@@ -1,5 +1,4 @@
 import os
-from operator import index
 
 linha_esmeralda = [
     {
@@ -130,7 +129,32 @@ def exibir_opcoes():
     print("1 - Calcular tempo de viagem")
     print("2 - Listar alertas")
     print("3 - Enviar alerta")
-    print("4 - Sair\n")
+    print("4 - Salvar informações")
+    print("5 - Sair\n")
+
+def salvar_informacoes(arr):
+    exibir_titulo("Salvar informações sobre a linha esmeralda")
+    try:
+        with open("Linha_esmeralda_infos.txt", "w") as arq:
+            for i in arr:
+                if len(i["alertas"]):
+                    arq.write(f"\n#### {i["nome"]} ####\n")
+                for j in i["alertas"]:
+                    for key, value in j.items():
+                        arq.write(f"{key}: {value}\n")
+                    arq.write("-------------------")
+        print("Arquivo salvo com sucesso!")
+    except:
+        print("Não foi possível salvar as informações")
+    voltar_menu_principal()
+
+def salvar_trajeto(mensagem):
+    try:
+        with open("trajeto_historico.txt", "a") as arq:
+            arq.write(mensagem)
+        print("Trajeto salvo com sucesso!")
+    except:
+        print("Não foi possível salvar as informações")
 
 def calcular_tempo_viagem():
     exibir_titulo("Calcular tempo de viagem")
@@ -169,6 +193,7 @@ def calcular_tempo_viagem():
             tempo_total = ((segundos_parado_estacao * len(trajeto)) + (
                     segundos_trajeto_entre_estacoes * len(trajeto) - 1)) / 60
             print(f"\nTempo total do trajeto entre {partida_nome} e {destino_nome}: {tempo_total:.2f} minutos")
+        salvar_trajeto(f"{partida_nome} ---> {destino_nome}: {tempo_total:.2f} minutos\n")
     voltar_menu_principal()
 
 def listar_alertas():
@@ -207,7 +232,7 @@ def finalizar_app():
 
 def escolher_opcao():
     try:
-        option = int(input("Escolha uma opção (1 a 4): "))
+        option = int(input("Escolha uma opção (1 a 5): "))
         match option:
             case 1:
                 calcular_tempo_viagem()
@@ -216,6 +241,8 @@ def escolher_opcao():
             case 3:
                 enviar_alerta()
             case 4:
+                salvar_informacoes(linha_esmeralda)
+            case 5:
                 finalizar_app()
             case _:
                 opcao_invalida()
