@@ -139,7 +139,7 @@ def salvar_informacoes(arr):
     print("Salvando informações...")
     try:
         with open("Linha_esmeralda_infos.json", "w", encoding="utf-8") as arq:
-            json.dump(linha_esmeralda, arq, ensure_ascii=False, indent=4)
+            json.dump(arr, arq, ensure_ascii=False, indent=4)
         print("Arquivo salvo com sucesso!")
     except:
         print("Não foi possível salvar as informações")
@@ -147,23 +147,23 @@ def salvar_informacoes(arr):
 
 def salvar_trajeto(dic):
     try:
-        if not os.path.exists("trajeto_historico.json"):  # Se o arquivo não existir
+        if not os.path.exists("trajeto_historico.json"):
             with open("trajeto_historico.json", "w", encoding="utf-8") as arq:
                 json.dump(dic, arq, ensure_ascii=False, indent=4)
             print("Trajeto salvo com sucesso!")
             return
         with open("trajeto_historico.json", "r", encoding="utf-8") as arq:
             try:
-                content = json.load(arq)
-                if isinstance(content, dict):
-                    content = [content]
-                elif not isinstance(content, list):
-                    content = []
+                conteudo = json.load(arq)
+                if isinstance(conteudo, dict):
+                    conteudo = [conteudo]
+                elif not isinstance(conteudo, list):
+                    conteudo = []
             except json.JSONDecodeError:
-                content = []
-        content.append(dic)
+                conteudo = []
+        conteudo.append(dic)
         with open("trajeto_historico.json", "w", encoding="utf-8") as arq:
-            json.dump(content, arq, ensure_ascii=False, indent=4)
+            json.dump(conteudo, arq, ensure_ascii=False, indent=4)
         print("Trajeto salvo com sucesso!")
     except:
         print("Não foi possível salvar o trajeto")
