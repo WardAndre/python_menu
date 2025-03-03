@@ -1,4 +1,6 @@
+import json
 import os
+import datetime
 
 linha_esmeralda = [
     {
@@ -134,27 +136,37 @@ def exibir_opcoes():
 
 def salvar_informacoes(arr):
     exibir_titulo("Salvar informações sobre a linha esmeralda")
+    print("Salvando informações...")
     try:
-        with open("Linha_esmeralda_infos.txt", "w") as arq:
-            for i in arr:
-                if len(i["alertas"]):
-                    arq.write(f"\n#### {i["nome"]} ####\n")
-                for j in i["alertas"]:
-                    for key, value in j.items():
-                        arq.write(f"{key}: {value}\n")
-                    arq.write("-------------------")
+        with open("Linha_esmeralda_infos.json", "w", encoding="utf-8") as arq:
+            json.dump(linha_esmeralda, arq, ensure_ascii=False, indent=4)
         print("Arquivo salvo com sucesso!")
     except:
         print("Não foi possível salvar as informações")
     voltar_menu_principal()
 
-def salvar_trajeto(mensagem):
+def salvar_trajeto(dic):
     try:
-        with open("trajeto_historico.txt", "a") as arq:
-            arq.write(mensagem)
+        if not os.path.exists("trajeto_historico.json"):  # Se o arquivo não existir
+            with open("trajeto_historico.json", "w", encoding="utf-8") as arq:
+                json.dump(dic, arq, ensure_ascii=False, indent=4)
+            print("Trajeto salvo com sucesso!")
+            return
+        with open("trajeto_historico.json", "r", encoding="utf-8") as arq:
+            try:
+                content = json.load(arq)
+                if isinstance(content, dict):
+                    content = [content]
+                elif not isinstance(content, list):
+                    content = []
+            except json.JSONDecodeError:
+                content = []
+        content.append(dic)
+        with open("trajeto_historico.json", "w", encoding="utf-8") as arq:
+            json.dump(content, arq, ensure_ascii=False, indent=4)
         print("Trajeto salvo com sucesso!")
     except:
-        print("Não foi possível salvar as informações")
+        print("Não foi possível salvar o trajeto")
 
 def calcular_tempo_viagem():
     exibir_titulo("Calcular tempo de viagem")
@@ -193,7 +205,13 @@ def calcular_tempo_viagem():
             tempo_total = ((segundos_parado_estacao * len(trajeto)) + (
                     segundos_trajeto_entre_estacoes * len(trajeto) - 1)) / 60
             print(f"\nTempo total do trajeto entre {partida_nome} e {destino_nome}: {tempo_total:.2f} minutos")
-        salvar_trajeto(f"{partida_nome} ---> {destino_nome}: {tempo_total:.2f} minutos\n")
+        trajeto_dic = {
+            "data": datetime.datetime.today().strftime('%m/%d/%Y'),
+            "partida": partida_nome,
+            "destino": destino_nome,
+            "tempo total": f"{tempo_total:.2f} minutos"
+        }
+        salvar_trajeto(trajeto_dic)
     voltar_menu_principal()
 
 def listar_alertas():
