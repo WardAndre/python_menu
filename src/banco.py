@@ -56,3 +56,31 @@ def consultar_linha_esmeralda():
             "alertas": alertas
         })
     return resultado
+
+def consultar_todos_alertas():
+    sql = "SELECT a.id, e.nome, a.email, a.assunto, a.mensagem FROM alerta_py a JOIN estacao_py e ON a.id_estacao = e.id ORDER BY e.id, a.id"
+    dados = None
+    with get_conexao() as con:
+        with con.cursor() as cur:
+            cur.execute(sql)
+            dados = cur.fetchall()
+    return dados
+
+def atualizar_alerta(id_alerta, email, assunto, mensagem):
+    sql = "UPDATE alerta_py SET email = :email, assunto = :assunto, mensagem= :mensagem WHERE id = :id_alerta"
+    with get_conexao() as con:
+        with con.cursor() as cur:
+            cur.execute(sql, {
+                "email": email,
+                "assunto": assunto,
+                "mensagem": mensagem,
+                "id_alerta": id_alerta
+            })
+        con.commit()
+
+def deletar_alerta(id_alerta):
+    sql = "DELETE FROM alerta_py WHERE id = :id_alerta"
+    with get_conexao() as con:
+        with con.cursor() as cur:
+            cur.execute(sql, {"id_alerta": id_alerta})
+        con.commit()

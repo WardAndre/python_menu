@@ -19,7 +19,8 @@ def exibir_opcoes():
     print("2 - Listar alertas")
     print("3 - Enviar alerta")
     print("4 - Salvar informações em JSON")
-    print("5 - Sair\n")
+    print("5 – Alterar / Deletar alerta")
+    print("6 - Sair\n")
 
 def salvar_informacoes():
     exibir_titulo("Salvar informações sobre a linha esmeralda")
@@ -137,6 +138,45 @@ def exibir_titulo(string):
     print("*" * len(string))
     print()
 
+def alterar_deletar_alerta():
+    exibir_titulo("Alterar / Deletar alertas")
+    alertas = banco.consultar_todos_alertas()
+    if not alertas:
+        print("Nenhum alerta cadastrado.")
+        return
+    print(f"{'ID':<4} {'Estação':<20} {'Assunto'}")
+    print("-" * 50)
+    for id_a, nome_est, _, assunto, _ in alertas:
+        print(f"{id_a:<4} {nome_est:<20} {assunto}")
+    escolha_id = input("\nDigite o ID do alerta (0 p/ cancelar): ").strip()
+    if not escolha_id.isdigit():
+        print("Entrada inválida.")
+        return
+    id_sel = int(escolha_id)
+    if id_sel == 0:
+        return
+    original = next((a for a in alertas if a[0] == id_sel), None)
+    if original is None:
+        print("ID não encontrado.")
+        return
+    _, nome_est, email_atual, assunto_atual, mensagem_atual = original
+    modo = input("Digite (A)lterar ou (D)eletar: ").strip().upper()
+    if modo == "A":
+        novo_email   = input(f"E-mail   [{email_atual}]: ").strip() or email_atual
+        novo_assunto = input(f"Assunto  [{assunto_atual}]: ").strip() or assunto_atual
+        nova_msg     = input(f"Mensagem [{mensagem_atual}]: ").strip() or mensagem_atual
+        banco.atualizar_alerta(id_sel, novo_email, novo_assunto, nova_msg)
+        print("Alerta atualizado com sucesso!")
+    elif modo == "D":
+        confirma = input("Confirma exclusão deste alerta? (S/N): ").strip().upper()
+        if confirma == "S":
+            banco.deletar_alerta(id_sel)
+            print("Alerta deletado com sucesso!")
+        else:
+            print("Operação cancelada.")
+    else:
+        print("Opção inválida.")
+
 def main():
     while True:
         if os.name == 'posix':
@@ -145,7 +185,7 @@ def main():
             os.system('cls')
         exibir_nome_programa()
         exibir_opcoes()
-        escolha = input("Escolha uma opção (1 a 5): ").strip()
+        escolha = input("Escolha uma opção (1 a 6): ").strip()
         if escolha == "1":
             calcular_tempo_viagem()
         elif escolha == "2":
@@ -155,6 +195,8 @@ def main():
         elif escolha == "4":
             salvar_informacoes()
         elif escolha == "5":
+            alterar_deletar_alerta()
+        elif escolha == "6":
             print("Finalizando o programa…")
             break
         else:
