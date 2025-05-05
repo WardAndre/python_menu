@@ -1,0 +1,125 @@
+[
+    {
+        "nome": "Osasco",
+        "conexão": "Linha Diamante",
+        "alertas": [
+            {
+                "email": "andre@mail.com",
+                "assunto": "Catraca",
+                "mensagem": "Umas das catracas estava quebrada, aumentando tempo de acesso a estação"
+            },
+            {
+                "email": null,
+                "assunto": "teste 2",
+                "mensagem": "teste 2"
+            }
+        ]
+    },
+    {
+        "nome": "Presidente Altino",
+        "conexão": "Linha Diamante",
+        "alertas": []
+    },
+    {
+        "nome": "Ceasa",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Villa-Lobos Jaguaré",
+        "conexão": null,
+        "alertas": [
+            {
+                "email": "test@mail.com",
+                "assunto": "Manutenção",
+                "mensagem": "Um dos bancos estava quebrado e jogado ao lado de uma das escadas"
+            }
+        ]
+    },
+    {
+        "nome": "Cidade Universitária",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Pinheiros",
+        "conexão": "Linha Amarela",
+        "alertas": []
+    },
+    {
+        "nome": "Hebraica Rebouças",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Cidade Jardim",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Vila Olímpia",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Berrini",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Morumbi",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Granja Julieta",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "João Dias",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Santo Amaro",
+        "conexão": "Linha Lilás",
+        "alertas": []
+    },
+    {
+        "nome": "Socorro",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Jurubatuba",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Autódromo",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Primavera Interlagos",
+        "conexão": null,
+        "alertas": []
+    },
+    {
+        "nome": "Grajaú",
+        "conexão": null,
+        "alertas": [
+            {
+                "email": "teste3@mail.com",
+                "assunto": "teste3",
+                "mensagem": "test3"
+            }
+        ]
+    },
+    {
+        "nome": "Mendes Vila Natal",
+        "conexão": null,
+        "alertas": []
+    }
+]

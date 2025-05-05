@@ -1,0 +1,20 @@
+[
+    {
+        "data": "04/10/2025",
+        "partida": "Ceasa",
+        "destino": "Pinheiros",
+        "tempo total": "9.98 minutos"
+    },
+    {
+        "data": "05/05/2025 16:11",
+        "partida": "Osasco",
+        "destino": "Grajaú",
+        "tempo_total_minutos": 45.5
+    },
+    {
+        "data": "05/05/2025 16:18",
+        "partida": "Osasco",
+        "destino": "Pinheiros",
+        "tempo_total_minutos": 13.0
+    }
+]
